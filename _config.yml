@@ -3,8 +3,8 @@ timezone: Europe/Rome
 email: howi@howilearn.it
 description: >
 
-baseurl: "" # the subpath of your site, e.g. /blog
-url: "" # the base hostname & protocol for your site, e.g. http://example.com
+baseurl: "/eserciziFCC" # the subpath of your site, e.g. /blog
+url: "http://howilearn.github.io" # the base hostname & protocol for your site, e.g. http://example.com
 
 # Collections
 collections:
