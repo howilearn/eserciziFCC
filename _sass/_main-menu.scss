@@ -1,0 +1,135 @@
+#main-menu {
+  position: sticky;
+  top: 0; //-1px;
+  z-index: 10;
+  background-color: $main-color;
+  border-top: 2px solid $main-link-color;
+
+  div { // questo è il div wrapper
+    padding: 0;
+  }
+}
+
+#main-menu .menu {
+  //background-color: pink;
+  //overflow: hidden; // SE PRESENTE IMPEDISCE I SOTTOMENÙ
+
+  ul {
+    display: flex; /* rende il menù orizzontale */
+    margin: 0 auto; // serve a eliminare il margine orizzontale impostato per le liste in text.css
+    //background-color: yellow;
+  }
+
+  li {
+    margin: 0; // serve a eliminare il margin-botton impostato in text.css
+  }
+
+  a {
+    display: block;
+    padding: $spacing-unit/2 $spacing-unit; /* determina una dimensione minima tra i pulsanti e di altezza */
+    //line-height: 2; /* modifica l'altezza del menù */
+    color: $main-link-color;
+    text-decoration: none;
+    text-align: left;
+  }
+
+  a:hover {
+    color: $main-color;
+    background-color: $brand-color;
+    outline: 1px solid $outline-color;
+  }
+
+  .dropdown {
+    position: relative; // serve a impostare il riferimento per far comparire il menù sotto
+  }
+
+  .dropdown-content {
+    display: none;
+    position: absolute; // fa comparire il menù allineato alla voce principale
+    background-color: darkblue;//$main-color;
+    min-width: 300px; // più facile tenerci sopra il mouse
+    box-shadow: 5px 10px 10px 5px rgba(0,0,0,0.5);
+    z-index: 10;
+  }
+
+  .dropdown:hover .dropdown-content {
+    display: block; // mostra i sottomenù quando si sovrappone il mouse
+  }
+
+  .logo {
+    font-weight: bold;
+    //background-color: yellow;
+  }
+
+  .about-btn, .sandwich {
+    //float: right;
+    margin: 0 0 0 auto;
+    //background-color: yellow;
+  }
+
+  li {
+    display: none;
+  }
+
+  .sandwich, .logo {
+    display: block;
+  }
+
+  @include media-query($on-laptop) {
+    li {
+      display: block;
+    }
+
+    .sandwich, .logo {
+      display: none;
+    }
+  }
+}
+
+#main-menu {
+  #rside {
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 0;
+    z-index: 11;
+    background-color: $main-color;
+    border-top: 2px solid $main-link-color;
+    overflow-x: hidden;
+    overflow-y: auto;
+    transition: 0.5s;
+
+    a {
+      display: block;
+      padding: $spacing-unit/2 $spacing-unit;
+      color: $main-link-color;
+      text-align: left;
+      text-decoration: none;
+    }
+
+    a:hover {
+      color: $main-color;
+      background-color: $brand-color;
+      outline: 1px solid $outline-color;
+    }
+
+    details {
+      background-color: $main-color;
+      outline: none;
+    }
+
+    summary {
+      @extend a;
+    }
+
+    ol {
+      list-style: none;
+      background-color: darkblue;
+    }
+
+    .chiudiRside {
+      text-align: right;
+    }
+  }
+}

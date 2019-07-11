@@ -1,0 +1,53 @@
+.risultati {
+  border: 2px solid purple;
+  background-color: gray;
+  font-size: 20px;
+  //text-align: right;
+
+  .display {
+    display: inline-block;
+    padding: 10px;
+    width: 100px;
+    text-align: center;
+    color: white;
+    background-color: black;
+    border: 2px solid purple;
+  }
+}
+.simon {
+  display: grid;
+  min-width: 250px;
+  min-height: 250px;
+  grid:
+    "a b" 1fr
+    "c d" 1fr
+    / 1fr 1fr;
+    grid-gap: 20px;
+    padding: 20px;
+    border: 2px solid purple;
+    background-color: gray;
+
+  .colore {
+    border: 2px solid purple;
+    &:hover {
+      outline: 3px solid $outline-color;
+    }
+  }
+
+  #rosso {
+    grid-area: a;
+    background-color: red;
+  }
+  #giallo {
+    grid-area: b;
+    background-color: yellow;
+  }
+  #verde {
+    grid-area: c;
+    background-color: green;
+  }
+  #blu {
+    grid-area: d;
+    background-color: blue;
+  }
+}

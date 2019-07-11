@@ -1,0 +1,26 @@
+#main-navigation {
+  display: none;
+  background-color: $background-color;
+  position: sticky;
+  top: 50px;
+  max-height: 1200px;
+
+  a {
+    display: block;
+    padding: $spacing-unit / 2;
+    color: $main-link-color;
+    background-color: $main-color;
+    text-align: left;
+    text-decoration: none;
+  }
+
+  a:hover {
+    color: $main-color;
+    background-color: $brand-color;
+    outline: 1px solid $main-link-color;
+  }
+
+  @include media-query($on-laptop) {
+    // display: block; // PER IL MOMENTO È VUOTA E NON LA PUBBLICO
+  }
+}

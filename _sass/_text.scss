@@ -1,0 +1,156 @@
+h1, h2, h3, h4, h5, h6 {
+  color: #f7801d;
+  text-align: center;
+  font-weight: lighter;
+}
+h6 { font-size: 1.4rem; }
+h5 { font-size: 1.6rem; }
+h4 { font-size: 1.8rem; }
+h3 { font-size: 2.0rem; }
+h2 { font-size: 2.2rem; }
+h1 { font-size: 2.5rem; }
+
+//*, // specificare solo quelli per cui aggiungerlo QUESTO IN TEXT
+h1, h2, h3, h4, h5, h6,
+p, ul, ol, li, dl, dd,
+blockquote, pre, figure,
+%vertical-rhythm {  // DA APPROFONDIRE, ma necessario avendo tolto completamente margini e padding
+  margin-bottom: $spacing-unit / 2; // Con questo ho solo il margine inferiore, da togliere nuovamente dove occorre.
+}
+
+/****************************/
+
+blockquote, pre, figure {
+  margin: 0 auto;
+}
+
+// per non sballare l'impaginazione è necessario regolare la larghezza dei contenuti più larghi della larghezza massima.
+pre {
+  //max-width: $content-width - (2 * $spacing-unit) - 2px; // contenere entro la larghezza pagina
+  // difficile trovare la combinazione delle unità di misura
+  padding: $spacing-unit / 2;
+  overflow-x: auto;
+  border: 1px solid grey; //$grey-color-light;
+  border-radius: 3px;
+  //font-size: $small-font-size;
+  color: #333; // modificato da highlighting
+  background-color: #eef; // modificato da _syntax-highlighting
+
+  > code {
+    font-family: monospace;
+  }
+}
+
+blockquote {
+  @extend pre;
+  border: none;
+  border-left: 3px solid grey;
+  font-style: italic;
+}
+
+figure {
+  @extend pre;
+
+  figcaption {
+    font-size: $font-size * 1.2;
+  }
+}
+
+/************************************
+ LE LISTE */
+
+nav {
+  ul {
+    list-style-type: none;
+    margin: 0 $spacing-unit;
+  }
+
+  a {
+    text-align: center;
+    text-decoration: none;
+  }
+}
+
+ul, ol, dl {
+  margin-left: $spacing-unit;
+}
+
+dt {
+  font-weight: bold;
+}
+
+dd {
+  margin-left: 2 * $spacing-unit;
+}
+
+/***********************************
+ I COLLEGAMENTI */
+a:link {
+  text-decoration: none;
+}
+a[href*="http"] { // link esterno
+  background: url('/images/glyphicons_free/glyphicons/png/glyphicons-390-new-window-alt.png') no-repeat 100% 0;
+  background-size: 10px;
+  padding-right: 12px;
+}
+a:visited {
+  color: purple;
+}
+a:focus {
+  outline: 1px solid $outline-color;
+}
+a:hover {
+  text-decoration: underline;
+}
+
+/**********************************/
+
+.text-center {
+  text-align: center;
+}
+
+hr {
+  color: #bbb;
+}
+
+/*********************************
+ LE TABELLE */
+
+table {
+ //table-layout: fixed;
+ width: 100%;
+ border-collapse: collapse;
+ border: 2px solid purple; /* #f8701d; */
+}
+
+caption {
+	font-style: italic;
+	caption-side: bottom;
+	padding: $spacing-unit / 2;
+	text-align: left;
+}
+
+thead {
+	background-color: $main-color; //#133877; /* #0084ff; */
+	color: $main-link-color; //#f8701d;
+}
+/*
+thead th:nth-child(1) { width: 14%; }
+thead th:nth-child(2) { width: 16%; }
+thead th:nth-child(3) { width: 14%; }
+thead th:nth-child(4) { width: 28%; }
+thead th:nth-child(5) { width: 28%; }
+*/
+tbody tr:nth-child(odd) {
+	background-color: #ffeccc;
+}
+
+tbody tr:nth-child(even) {
+	background-color: white;
+}
+
+th, td {
+ padding: $spacing-unit;
+ text-align: center;
+ border: 1px solid purple;
+}

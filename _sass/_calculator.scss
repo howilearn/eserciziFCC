@@ -1,0 +1,132 @@
+div.resizable {
+    resize: both;
+    overflow: auto;
+}
+
+.calculator {
+  display: grid;
+  height: 100%;
+  grid:
+    "q q q q" 1fr
+    "a b c d" 1fr
+    "e f g h" 1fr
+    "i j k l" 1fr
+    "m n o p" 1fr
+    / 1fr 1fr 1fr 1fr;
+    grid-gap: 5px;
+    //align-items: stretch;
+    //justify-items: stretch;
+    //align-content: space-around;
+    //justify-content: space-around;
+    border: 2px solid purple;
+    border-radius: 5px;
+    padding: 10px;
+    background-color: gray;
+
+  & > div {
+    color: black;
+    background-color: green;
+    border: 2px solid purple;
+    border-radius: 5px;
+    display: flex;
+    //padding: auto;
+    &:hover {
+      outline: 3px solid $outline-color;
+    }
+
+    p {
+      margin: auto;
+      font-weight: bolder;
+      font-size: 20px;
+      //background-color: pink;
+    }
+  }
+
+  div#schermo {
+    display: block;
+    overflow: visible;
+
+    p {
+    //  width: 100%;
+    //  margin: auto 0;
+      padding-right: 5px;
+      text-align: right;
+    }
+
+    p#result {
+      font-size: 25px;
+    }
+
+    p:nth-child(2) {
+      font-weight: lighter;
+    }
+  }
+
+  #zero {
+    grid-area: n;
+  }
+  #uno {
+    grid-area: a;
+  }
+  #due {
+    grid-area: b;
+  }
+  #tre {
+    grid-area: c;
+  }
+  #quattro {
+    grid-area: e;
+  }
+  #cinque {
+    grid-area: f;
+  }
+  #sei {
+    grid-area: g;
+  }
+  #sette {
+    grid-area: i;
+  }
+  #otto {
+    grid-area: j;
+  }
+  #nove {
+    grid-area: k;
+  }
+  #più {
+    grid-area: d;
+  }
+  #meno {
+    grid-area: h;
+  }
+  #per {
+    grid-area: l;
+  }
+  #diviso {
+    grid-area: p;
+  }
+  #uguale {
+    grid-area: o;
+  }
+  #cancella {
+    grid-area: m;
+    color: white;
+    background-color: red;
+  }
+  #schermo {
+    grid-area: q;
+    color: white;
+    background-color: black;
+    outline: none;
+  }
+
+  .num {
+    color: black;
+    background-color: white;
+  }
+
+  .oper {
+    color: white;
+    background-color: $main-color;
+  }
+
+}

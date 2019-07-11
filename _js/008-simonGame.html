@@ -1,0 +1,250 @@
+---
+layout: item
+title: Simon Game
+voceMenu: Simon
+author: howi
+date: 2017-09-13 14:08 +0200
+published: true
+---
+
+<div class="resizable">
+  <figure class="">
+    <ul>
+      <li>Ripeti la sequenza;</li>
+      <li>se aspetti più di 10 secondi hai perso;</li>
+      <li>si vince a 20.</li>
+    </ul>
+    <p><strong>Modalità rigorosa: </strong><input id=strict type="checkbox"><br>
+      (dopo un errore si ricomincia da zero)</p>
+    <p><input id=inizia type="button" value=inizia>
+    <input id=ricomincia type="button" value=ricomincia>
+    <input id=azzera type="button" value=resetta></p>
+  </figure>
+  <br>
+  <div id="simon" class="simon">
+    <div id=rosso class="colore"></div>
+    <div id=giallo class="colore"></div>
+    <div id=verde class="colore"></div>
+    <div id=blu class="colore"></div>
+  </div>
+  <br>
+  <figure class="risultati">
+    <h2 id=campione style="color: magenta;"></h2>
+    <p>Impulsi: <span id="impulsi" class="display">0</span></p>
+  </figure>
+</div>
+
+<script>
+var
+  colori = document.getElementsByClassName('colore'),
+  suonoRosso = new Audio("https://s3.amazonaws.com/freecodecamp/simonSound1.mp3"),
+  suonoGiallo = new Audio("https://s3.amazonaws.com/freecodecamp/simonSound2.mp3"),
+  suonoVerde = new Audio("https://s3.amazonaws.com/freecodecamp/simonSound3.mp3"),
+  suonoBlu = new Audio("https://s3.amazonaws.com/freecodecamp/simonSound4.mp3"),
+  /* FUNZIONA ANCHE
+  var suonoRosso = document.createElement('audio');
+  suonoRosso.src = "https://s3.amazonaws.com/freecodecamp/simonSound1.mp3"*/
+  sequenza = [],
+  impulsi = 0,
+  timerSequenza = {},
+  timerClick = {},
+  num = 0,
+  colore = '',
+  impulso = 0,
+  tempo = 0,
+  intervallo = {},
+  ogni = 1200, // 900 e 700
+  conta = 0,
+  ripetiSequenzaAttiva = false,
+  rigore = document.getElementById('strict').checked
+;
+
+document.getElementById('impulsi').innerHTML = 0;
+
+function audio_test_mp3() { // DA MR.WEBMASTER
+  var snd = document.createElement('audio');
+  //console.log(!!(snd.canPlayType && snd.canPlayType('audio/mpeg;').replace(/no/, '')));
+  return !!(snd.canPlayType && snd.canPlayType('audio/mpeg;').replace(/no/, ''));
+}
+
+function ripristinaColore() {
+  document.getElementById("rosso").style.backgroundColor = "red";
+  document.getElementById("giallo").style.backgroundColor = "yellow";
+  document.getElementById("verde").style.backgroundColor = "green";
+  document.getElementById("blu").style.backgroundColor = "blue";
+}
+
+function suona(colore) {
+  if (audio_test_mp3()) {
+    switch(colore) {
+      case "rosso":
+        suonoRosso.play();
+        document.getElementById("rosso").style.backgroundColor = "darkred";
+        break;
+      case "giallo":
+        suonoGiallo.play();
+        document.getElementById("giallo").style.backgroundColor = "orange";
+        break;
+      case "verde":
+        suonoVerde.play();
+        document.getElementById("verde").style.backgroundColor = "darkgreen";
+        break;
+      case "blu":
+        suonoBlu.play();
+        document.getElementById("blu").style.backgroundColor = "darkblue";
+        break;
+    }
+  }
+  var mantieni = setTimeout(ripristinaColore, 250);
+}
+
+function interrompiSuonaTutto() {
+  clearInterval(intervallo);
+}
+
+function suonaTutto() {
+  //console.log(conta + ' - ' + sequenza[conta]);
+  suona(sequenza[conta]);
+  conta ++;
+  if (conta === sequenza.length) {
+    interrompiSuonaTutto();
+    ripetiSequenzaAttiva = false;
+    document.getElementById('campione').innerHTML = "";
+    conta = 0;
+    timerSequenzaOn();
+  }
+}
+
+function randomColore() {
+  num = Math.floor((Math.random() * 4) + 1);
+  switch(num) {
+    case 1:
+      //colore = rosso; // così prende l'elemento div class colore con id === rosso
+      colore = 'rosso';
+      break;
+    case 2:
+      colore = 'giallo';
+      break;
+    case 3:
+      colore = 'verde';
+      break;
+    case 4:
+      colore = 'blu';
+      break;
+  }
+}
+
+function errore() {
+  tempo ++;
+  //console.log(tempo);
+  if (tempo === 10) {
+    alert('Superato il limite di tempo');
+    resetta();
+  }
+}
+
+function ripetiSequenza() {
+  rigore = document.getElementById('strict').checked;
+  //console.log('rigore: ' + rigore);
+  timerClickOff();
+  ripetiSequenzaAttiva = true;
+  impulsi = sequenza.length;
+  document.getElementById('impulsi').innerHTML = impulsi;
+  if (impulsi > 7) {
+    ogni = 900;
+  }
+  if (impulsi > 14) {
+    ogni = 700;
+  }
+  if (impulsi > 20) {
+    document.getElementById('campione').innerHTML = "Grande! Hai vinto! Solo i campioni superano 20!";
+  }
+  //console.log(ogni);
+  intervallo = setInterval(suonaTutto, ogni);
+}
+
+function inizia() {
+  randomColore();
+  sequenza.push(colore);
+  ripetiSequenza();
+}
+
+function timerSequenzaOn() {
+  timerSequenza = setInterval(errore, 1000);
+}
+
+function timerClickOn() {
+  timerClick = setInterval(errore, 1000);
+}
+
+function timerSequenzaOff() {
+  clearInterval(timerSequenza);
+  tempo = 0;
+}
+
+function timerClickOff() {
+  clearInterval(timerClick);
+  tempo = 0;
+}
+
+function resetta() {
+  clearInterval(intervallo);
+  clearInterval(timerSequenza);
+  clearInterval(timerClick);
+  sequenza = [];
+  impulsi = 0;
+  timerSequenza = {};
+  timerClick = {};
+  num = 0;
+  colore = '';
+  impulso = 0;
+  tempo = 0;
+  intervallo = {};
+  ogni = 1200;
+  conta = 0;
+  document.getElementById('impulsi').innerHTML = 0;
+}
+
+function ricomincia() {
+  resetta();
+  inizia();
+}
+
+function click() {
+  if (!ripetiSequenzaAttiva) {
+    timerSequenzaOff();
+    timerClickOff();
+    colore = this.attributes[0].value;
+    suona(colore);
+    if (colore === sequenza[impulso]) {
+      impulso ++;
+      timerClickOn();
+      if (impulso === sequenza.length) {
+        randomColore();
+        sequenza.push(colore);
+        //console.log(sequenza);
+        impulso = 0;
+        ripetiSequenza();
+      }
+    }
+    else {
+      if (rigore) {
+        document.getElementById('campione').innerHTML = "Hai perso. Ricomincia!";
+        resetta();
+      }
+      else {
+        document.getElementById('campione').innerHTML = "Hai sbagliato. Riprova!";
+        impulso = 0;
+        ripetiSequenza();
+      }
+    }
+  }
+}
+
+for (var i in colori) {
+  colori[i].onclick = click;
+}
+document.getElementById('inizia').addEventListener("click", inizia);
+document.getElementById('ricomincia').addEventListener("click", ricomincia);
+document.getElementById('azzera').addEventListener("click", resetta);
+</script>

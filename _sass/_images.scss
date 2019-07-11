@@ -1,0 +1,24 @@
+
+/* stile delle thumbnail classe thumbnail è su un figure che potrei mettere nelle inclusioni */
+// usata per il portfolio
+.thumbnail {
+  display: inline-block;
+  padding: $spacing-unit / 2;
+  margin: $spacing-unit / 2;
+  border: 1px solid #bbb;
+  border-radius: 5px;
+  //float: left;
+  img {
+    display: block;
+    width: 220px;
+    margin: 0 auto;
+  }
+  a {
+    color: #666;
+    text-align: center;
+    text-decoration: none;
+  }
+  a:hover {
+    text-decoration: underline;
+  }
+}

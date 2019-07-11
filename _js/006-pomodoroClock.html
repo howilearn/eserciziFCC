@@ -1,0 +1,116 @@
+---
+layout: item
+title: pomodoro Clock
+voceMenu: pomodoroClock
+author: howi
+date: 2017-08-24 15:08 +0200
+---
+
+<div class="">
+  <p>Il pomodoro Clock esegue un conto alla rovescia che serve a <a href="https://en.wikipedia.org/wiki/Pomodoro_Technique" target="_blank" title="wikipedia">spezzare il lavoro in intervalli della durata di 25 minuti.</a></p>
+
+<!-- SE ALL'INTERNO DI UN "FORM" VIENE RICARICATO DI CONTINUO E NON FUNZIONA! -->
+  <figure>
+    <p><progress id=avanzamento max="1500" value="1500"></progress><p>
+    <p><i id="display"></i></p>
+    <p>
+      <button id="riduci">-1 minuto</button>
+      <button id="aumenta">+1 minuto</button>
+      <button id="imposta">Imposta</button>
+    </p>
+    <br>
+    <p>
+      <button id="avvia">Avvia</button>
+      <button id="ferma">Ferma</button>
+      <button id="reset">Reset</button>
+    </p>
+  </figure>
+</div>
+
+<script>
+  var
+    barra = document.getElementById('avanzamento'),
+    conta = {},
+    display = document.getElementById('display'),
+    tempo = 1500,  // sono secondi
+    minuti = tempo / 60,
+    floor = Math.floor(minuti),
+    secondi = tempo - floor * 60;
+
+  document.getElementById('imposta').addEventListener("click", imposta);
+  document.getElementById('avvia').addEventListener("click", avvia);
+  document.getElementById('ferma').addEventListener("click", ferma);
+  document.getElementById('reset').addEventListener("click", reset);
+  document.getElementById('aumenta').addEventListener("click", aumenta);
+  document.getElementById('riduci').addEventListener("click", riduci);
+
+  //console.log(barra.attributes);
+  //console.log(tempo);
+
+  function aumenta() {
+    tempo += 60;
+    minuti = tempo / 60;
+    floor = Math.floor(minuti),
+    secondi = tempo - floor * 60;
+    barra.setAttribute('max',tempo);
+    barra.setAttribute('value',tempo);
+    // SECONDI NON FUNZIONA E MINUTI DÀ RISULTATI CON VIRGOLA
+    // DEVO USARE FUNZIONI MATEMATICHE PER FAR COMPARIRE NUMERI INTERI E SECONDI.
+    display.innerHTML = floor + ' : ' + secondi; //Math.floor(minuti) + ':' + secondi + '<br>' +
+  }
+
+  function riduci() {
+    tempo -= 60;
+    minuti = tempo / 60;
+    floor = Math.floor(minuti),
+    secondi = tempo - floor * 60;
+    barra.setAttribute('max',tempo);
+    barra.setAttribute('value',tempo);
+    display.innerHTML = floor + ' : ' + secondi;
+  }
+
+  function imposta() {
+    barra.setAttribute('max',tempo);
+    barra.setAttribute('value',tempo);
+    //console.log(barra.attributes);
+  }
+
+  function contatore() {
+    if (tempo === 0) {
+      alert('Tempo esaurito!')
+      reset();
+      return false;
+    }
+    tempo -= 1;
+    minuti = tempo / 60;
+    floor = Math.floor(minuti),
+    secondi = tempo - floor * 60;
+    barra.attributes[2].value = tempo.toString();
+    display.innerHTML = floor + ' : ' + secondi;
+    //console.log(tempo + ' - ' + floor + ' - ' + secondi);
+    //console.log(barra.attributes[2].value);
+  }
+
+  function avvia() {
+    conta = setInterval(contatore, 1000);
+  }
+
+  function ferma() {
+    clearInterval(conta);
+  }
+
+  function reset() {
+    clearInterval(conta);
+    tempo = 1500;
+    minuti = tempo / 60;
+    floor = Math.floor(minuti);
+    secondi = tempo - floor * 60;
+    barra.setAttribute('max',tempo);
+    barra.setAttribute('value',tempo);
+    display.innerHTML = floor + ' : ' + secondi;
+    //console.log(barra.attributes[2].value);
+  }
+
+  barra.attributes[2].value = tempo.toString();
+  display.innerHTML = floor + ' : ' + secondi;
+</script>

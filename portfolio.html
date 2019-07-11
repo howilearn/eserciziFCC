@@ -1,0 +1,26 @@
+---
+layout: portfolio
+title: 
+lang: en
+---
+<section>
+<p></p>
+</section>
+{% for doc in site.portfolio %}
+<section class="clear">
+<div class="float">
+  <div class="float-left">
+    <figure class="thumbnail">
+      <a href="{{ doc.href }}" target="_blank">
+        <img src="{{ doc.src }}" alt="{{ doc.alt }}">
+        <figcaption class="caption">{{ doc.figcaption }}</figcaption>
+      </a>
+    </figure>
+  </div>
+  <div class="">
+    <h4>{{ doc.title }}</h4>
+    {{ doc.content }}
+  </div>
+</div>
+</section>
+{% endfor %}

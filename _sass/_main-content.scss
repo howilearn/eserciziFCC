@@ -1,0 +1,59 @@
+// Decido di formattare qui il LAYOUT delle sezioni interne delle pagine (contenuti di main)
+// layout che possono essere usati in più pagine e più sezioni
+
+section { // creando le pagine lunghe tutte in markdown (non spezzate in post) non riesco ad usare i sectioning
+  display: block;
+  padding-top: 50px;
+}
+span[id] { //uso questo per far comparire i titoli quando si usa la navigazione interna alla pagina.
+  display: block;
+  padding-top: 50px;
+}
+
+// alcuni metodi per impaginare in 2 o 3 colonne sia per main-content che main-footer
+// float usato per il CONTENUTO
+.float {
+  display: inline-block;
+}
+.float-left {
+  float: left;
+}
+.float-right {
+  float: right;
+}
+.clear {
+  clear: both;
+}
+
+// griglia da usare per il CONTENUTO
+// prossima volta -> content-grid o align-grid
+.griglia-2-col {
+  display: grid;
+  grid: "a b" max-content / max-content 1fr;
+  padding: 0;
+  margin: 0;
+}
+.griglia-3-col {
+  display: grid;
+  grid: "b" / 1fr;
+  padding: 0;
+  margin: 0;
+}
+@include media-query($on-laptop) {
+  .griglia-3-col {
+    grid: "a b c" max-content / 20% 1fr 20%;
+  }
+}
+//col-a
+.prima-col {
+  grid-area: a;
+}
+//col-b
+.seconda-col {
+  grid-area: b;
+  //background-color: pink;
+}
+//col-c
+.terza-col {
+  grid-area: c;
+}

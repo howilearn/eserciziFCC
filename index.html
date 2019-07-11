@@ -1,0 +1,38 @@
+---
+# parametri predefiniti
+layout: default
+permalink:
+published: true
+# parametri personalizzati
+title: Posts
+lang: it
+---
+<article class="wrapper" itemscope itemtype="http://schema.org/BlogPosting">
+<h1>{{ page.title }}</h1>
+<!--
+<p>I post per elencare le cose interessanti che trovo e che cercherò di imparare, o sulle quali vorrei avere l'opinione di altri.</p>
+<p>Probabilmente riguarderanno tutti il mondo di internet e la tecnologia.</p> -->
+<table>
+  <thead>
+    <tr>
+      <th>Titolo</th>
+      <th>Data</th>
+      
+    </tr>
+  </thead>
+  <tbody>
+    {% assign date_format = "%Y, %B %e" %}
+    <!-- %b %-d, %Y"
+    %A %e %B %Y, %H:%M" -->
+    {% for post in site.posts %}
+    <tr>
+      <td><a class="post-link" href="{{ post.url | relative_url }}"><span class="post-title">{{ post.title | escape }}</span></a></td>
+      <td><span class="post-meta"><time datetime="{{ post.date | date_to_xmlschema }}" itemprop="datePublished">{{ post.date | date: date_format }}</time></span></td>
+      
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+<br>
+
+</article>

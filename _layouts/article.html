@@ -1,0 +1,27 @@
+---
+layout: default
+---
+<article class="wrapper"> <!-- class=post -->
+
+  <header> <!-- class="post-header" -->
+    <p> <!-- class="post-meta" -->
+      {% assign date_format = "%A %e %B %Y, ore %H:%M" %}
+      <!--
+        "%Y, %B %e"
+        "%b %-d, %Y"
+        "%A %e %B %Y, %H:%M"
+      -->
+      <span class="post-meta"><time datetime="{{ page.date | date_to_xmlschema }}" itemprop="datePublished">{{ page.date | date: date_format }}</time></span>
+      {% if page.author %}
+       - Scritto da
+      <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span  itemprop="name"><em><strong>{{ page.author }}</strong></em></span></span>
+      {% endif %}
+    </p>
+    <h1 itemprop="name headline">{{ page.title | escape }}</h1>
+  </header>
+
+  <div itemprop="articleBody"> <!-- class="post-content" -->
+    {{ content }}
+  </div>
+
+</article>

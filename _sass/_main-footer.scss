@@ -1,0 +1,17 @@
+
+#main-footer {
+  //margin-top: 20px;
+  padding: $spacing-unit;
+  text-align: center;
+  border-top: 2px solid $main-link-color;
+  background-color: $footer-background-color;
+  color: $footer-text-color;
+  min-height: 600px;
+  z-index: 1;
+}
+
+#main-footer i {
+  color: $main-link-color;
+  display: inline-block;
+  padding: 30px;
+}

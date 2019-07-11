@@ -1,0 +1,45 @@
+<nav id="main-menu">
+  <div class="wrapper griglia-3-col">
+    <div class="prima-col"></div>
+    <div class="seconda-col menu">
+      <ul>
+        <li class="logo"><a href="/index.html">How I learn</a></li>
+        <li><a href="/index.html">Home</a></li>
+        <li><a href="/portfolio.html">FCC</a></li>
+        <div class="dropdown">
+          <li><a href="javascript:void(0);">Collezioni</a></li>
+          <ul class="dropdown-content">
+            <li><a href="/js.html">JS</a></li>
+          </ul>
+        </div>
+        <li class="about-btn"><a href="https://github.com/howilearn/" target="_blank" title="Github profile">About</a></li>
+        <li class="sandwich"><a href="javascript:void(0);" onclick="openRside()">&#9776;</a></li>
+      </ul>
+    </div>
+    <div class="terza-col"></div>
+  </div>
+
+  <!-- per dimensioni inferiori a $on-laptop -->
+  <div id="rside" class="rside">
+    <a class="chiudiRside" href="javascript:void(0);" onclick="closeRside()">X</a>
+    <a href="/index.html">Home</a>
+    <a href="/portfolio.html">FCC</a>
+    <details open>
+      <summary>Collezioni</summary>
+      <ol>
+        <li><a href="/js.html">JS</a>
+      </ol>
+    </details>
+    <a href="https://github.com/howilearn/" target="_blank" title="Github profile">About</a>
+  </div>
+</nav>
+
+<script type="text/javascript">
+function openRside() {
+    document.getElementById("rside").style.width = "300px";
+}
+
+function closeRside() {
+    document.getElementById("rside").style.width = "0";
+}
+</script>

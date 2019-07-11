@@ -1,0 +1,44 @@
+timezone: Europe/Rome
+#title:
+email: howi@howilearn.it
+description: >
+
+baseurl: "" # the subpath of your site, e.g. /blog
+url: "" # the base hostname & protocol for your site, e.g. http://example.com
+
+# Collections
+collections:
+  portfolio:
+
+  js:
+    output: true
+
+# Impostazioni di default
+defaults:
+#  posts:
+#    author: howi
+
+# Build settings
+markdown: kramdown
+kramdown:
+ input: GFM
+ auto_ids: true
+ hard_wrap: false
+ syntax_highlighter: rouge
+
+# theme: minima
+
+#plugins:
+#  - jekyll-feed
+
+# Exclude from processing.
+# The following items will not be processed, by default. Create a custom list
+# to override the default setting.
+# exclude:
+#   - Gemfile
+#   - Gemfile.lock
+#   - node_modules
+#   - vendor/bundle/
+#   - vendor/cache/
+#   - vendor/gems/
+#   - vendor/ruby/

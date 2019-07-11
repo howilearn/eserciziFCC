@@ -1,0 +1,141 @@
+.tabellone {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 2px;
+  border: 2px solid purple;
+  background-color: gray;
+
+  .display {
+    display: block;
+    overflow: hidden;
+    padding: 15px;
+    text-align: center;
+    font-size: 20px;
+    color: white;
+    background-color: black;
+    outline: 2px solid $outline-color;
+  }
+}
+.segno-giocatore {
+  text-align: center;
+  color: $brand-color;
+  background-color: white;
+  font-weight: bolder;
+  font-size: 16px;
+  padding: 5px;
+}
+.campo-giocatore {
+  display: inline-block;
+  width: 50%;
+  input {
+    width: 100%;
+    font-size: 16px;
+    padding: 5px;
+  }
+}
+.reimposta {
+  width: 25%;
+  font-size: 16px;
+  padding: 5px;
+}
+.nome-giocatore {
+  display: inline-block;
+  //width: 25%;
+  height: 50px;
+  text-align: right;
+  font-size: 16px;
+  padding: 5px;
+}
+#conferma, #resetta {
+  display: block;
+  width: 100%;
+  font-size: 16px;
+  padding: 5px;
+}
+#partite {
+  grid-column: 1 / span 2;
+}
+#x, #vinte-x {
+  grid-column: 1;
+}
+#o, #vinte-o {
+  grid-column: 2;
+}
+#partite-totali {
+  grid-column: 1;
+  display: block;
+  padding: 15px;
+  text-align: right;
+  font-size: 20px;
+  color: $main-color;
+}
+#giocate {
+  grid-column: 2;
+}
+#reset {
+  grid-column: 1 / span 2;
+  //background-color: yellow;
+  button {
+    width: 100%;
+    font-size: 16px;
+    padding: 5px;
+  }
+}
+
+.tictactoe {
+  display: grid;
+  min-height: 250px;
+  grid:
+    "a b c" 1fr
+    "d e f" 1fr
+    "g h i" 1fr
+    / 1fr 1fr 1fr;
+    grid-gap: 2px;
+    //border: 2px solid purple;
+    background-color: purple;
+
+  .casella { //& > div
+    color: black;
+    background-color: white;
+    display: flex;
+    padding: 20px;
+    &:hover {
+      outline: 3px solid $outline-color;
+    }
+
+    p {
+      margin: auto;
+      font-weight: bolder;
+      font-size: 20px;
+      //background-color: pink;
+    }
+  }
+
+  #uno {
+    grid-area: a;
+  }
+  #due {
+    grid-area: b;
+  }
+  #tre {
+    grid-area: c;
+  }
+  #quattro {
+    grid-area: d;
+  }
+  #cinque {
+    grid-area: e;
+  }
+  #sei {
+    grid-area: f;
+  }
+  #sette {
+    grid-area: g;
+  }
+  #otto {
+    grid-area: h;
+  }
+  #nove {
+    grid-area: i;
+  }
+}

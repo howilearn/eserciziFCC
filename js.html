@@ -1,0 +1,32 @@
+---
+layout: default
+title: I miei esercizi di JavaScript
+lang: it
+---
+<article class="wrapper" itemscope itemtype="http://schema.org/BlogPosting">
+<h1>{{ page.title }}</h1>
+<p>JavaScript sviluppati per FreeCodeCamp.</p>
+<table>
+  <thead>
+    <tr>
+      <th>Titolo</th>
+      <th>Data</th>
+      <th>Autore</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% assign date_format = "%Y, %B %e" %}
+    <!-- %b %-d, %Y"
+    %A %e %B %Y, %H:%M" -->
+    {% for post in site.js %}
+    <tr>
+      <td><a class="post-link" href="{{ post.url | relative_url }}"><span class="post-title">{{ post.ord | escape }}{{ post.title | escape }}</span></a></td>
+      <td><span class="post-meta"><time datetime="{{ post.date | date_to_xmlschema }}" itemprop="datePublished">{{ post.date | date: date_format }}</time></span></td>
+      <td>{% if post.author %}
+      <span itemprop="author" itemscope itemtype="http://schema.org/Person"><i itemprop="name">{{ post.author }}</i></span>
+      {% endif %}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+</article>

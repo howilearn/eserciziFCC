@@ -1,0 +1,929 @@
+---
+layout: item
+title: ticTacToe Game
+voceMenu: ticTacToe
+author: howi
+date: 2017-09-13 10:08 +0200
+published: true
+---
+
+
+<div class="resizable">
+  <figure class="">
+    <h2 class="">Giocatori</h2>
+    <ol>
+      <li>inserendo un solo giocatore l'avversario sarà il computer,</li>
+      <li>il giocatore "Player 1 (X)" comincerà per primo,</li>
+      <li>per far cominciare Computer mettere il proprio nome in "Player 2 (O)".</li>
+      <li>premi "<i>Conferma</i>",</li>
+    </ol>
+    <form class="">
+      <p>
+        <span class="nome-giocatore">Player 1 (X): </span>
+        <span class="campo-giocatore">
+          <input id="nome-x" type="text" name="nome-x" placeholder="nome qui -> inizi tu" value="">
+        </span>
+      <!--  <input class="reimposta" type="reset"> -->
+      </p>
+    </form>
+    <form class="">
+      <p>
+        <span class="nome-giocatore">Player 2 (O): </span>
+        <span class="campo-giocatore">
+          <input id="nome-o" type="text" name="nome-0" placeholder="nome qui -> inizia Computer" value="">
+        </span>
+      <!--  <input class="reimposta" type="reset"> -->
+      </p>
+    </form>
+    <input id=conferma type="button" value=Conferma>
+    <br>
+    <input id=resetta type="button" value=Reset>
+  </figure>
+  <br>
+  <div id="tictactoe" class="tictactoe">
+    <div id=uno class="casella"><p></p></div>
+    <div id=due class="casella"><p></p></div>
+    <div id=tre class="casella"><p></p></div>
+    <div id=quattro class="casella"><p></p></div>
+    <div id=cinque class="casella"><p></p></div>
+    <div id=sei class="casella"><p></p></div>
+    <div id=sette class="casella"><p></p></div>
+    <div id=otto class="casella"><p></p></div>
+    <div id=nove class="casella"><p></p></div>
+  </div>
+  <br>
+  <figure class="tabellone">
+    <h2 id="partite">Partite vinte</h2>
+    <div>
+      <p id="x" class="segno-giocatore">Player 1 (X)</p>
+      <p id="vinte-x" class="display">0</p>
+    </div>
+    <div>
+      <p id="o" class="segno-giocatore">Player 2 (O):</p>
+      <p id="vinte-o" class="display">0</p>
+    </div>
+    <div id="partite-totali" class="">
+      <p>Partite giocate: </p>
+    </div>
+    <div class="">
+      <p id="giocate" class="display">0</p>
+    </div>
+    <div id="reset" class="">
+      <button>Reset</button>
+    </div>
+  </figure>
+</div>
+
+<script>
+  var
+    caselle = document.getElementsByClassName('casella'),
+    x = '',
+    o = '',
+    nomeX = document.getElementById('nome-x'),
+    nomeO = document.getElementById('nome-o'),
+    vinteX = 0,
+    vinteO = 0,
+    displayX = document.getElementById('vinte-x'),
+    displayO = document.getElementById('vinte-o'),
+    partite = 0,
+    giocate = document.getElementById('giocate'),
+    tiri = 0,
+    comb123 = [],
+    comb147 = [],
+    comb159 = [],
+    comb258 = [],
+    comb369 = [],
+    comb357 = [],
+    comb456 = [],
+    comb789 = [],
+    combinazioni = [],
+    comb123num = [6],
+    comb147num = [12],
+    comb159num = [15],
+    comb258num = [15],
+    comb369num = [18],
+    comb357num = [15],
+    comb456num = [15],
+    comb789num = [24],
+    combinazioniNum = [],
+    num = 0,
+    numeriUsati = [],
+    lastTiri = -1,
+    vincita = 0,
+    tiriLettere = '',
+    tiro = {},
+    comb = []
+  ;
+
+  giocate.innerHTML = partite;
+  displayX.innerHTML = vinteX;
+  displayO.innerHTML = vinteO;
+
+  function controllaGiocatori() {
+    if (nomeX.value === '' & nomeO.value === '') {
+      //alert('Se vuoi puoi personalizzare i giocatori');//'Serve almeno un giocatore!');
+      x = 'Guest';
+      o = 'Computer';
+      nomeX.value = x;
+      nomeO.value = o;
+      document.getElementById('x').innerHTML = x;
+      document.getElementById('o').innerHTML = o;
+    }
+    else if (nomeX.value !== '' & nomeO.value === '') {
+      x = nomeX.value;
+      o = 'Computer';
+      //alert('Inizia a giocare ' + x);
+      //nomeX.value = x;
+      nomeO.value = o;
+      document.getElementById('x').innerHTML = x;
+      document.getElementById('o').innerHTML = o;
+    }
+    else if (nomeX.value === '' & nomeO.value !== '') {
+      x = 'Computer';
+      o = nomeO.value;
+      //alert('Inizia a giocare ' + x);
+      nomeX.value = x;
+      //nomeO.value = o;
+      document.getElementById('x').innerHTML = x;
+      document.getElementById('o').innerHTML = o;
+    }
+    else {
+      x = nomeX.value;
+      o = nomeO.value;
+      //alert('Ora tocca a ' + o);
+      //alert('Inizia a giocare ' + x);
+      //nomeX.value = x;
+      //nomeO.value = o;
+      document.getElementById('x').innerHTML = x;
+      document.getElementById('o').innerHTML = o;
+    }
+    //console.log(x);
+  }
+
+  function azzera() {
+    tiri = 0;
+    lastTiri = -1;
+    for (var i in caselle) {
+      caselle[i].innerHTML = '<p></p>';
+    }
+    comb123 = [];
+    comb147 = [];
+    comb159 = [];
+    comb258 = [];
+    comb369 = [];
+    comb357 = [];
+    comb456 = [];
+    comb789 = [];
+    comb123num = [6],
+    comb147num = [12],
+    comb159num = [15],
+    comb258num = [15],
+    comb369num = [18],
+    comb357num = [15],
+    comb456num = [15],
+    comb789num = [24],
+    combinazioni = [];
+    combinazioniNum = [];
+    numeriUsati = [];
+    num = 0;
+    vincita = 0;
+    tiriLettere = '';
+    tiro = {};
+    comb = [];
+  }
+
+  function reset() {
+    partite = 0;
+    vinteX = 0;
+    vinteO = 0;
+    giocate.innerHTML = partite;
+    displayX.innerHTML = vinteX;
+    displayO.innerHTML = vinteO;
+    x = 'Player 1 (X)';
+    o = 'Player 2 (O)';
+    nomeX.value = '';
+    nomeO.value = '';
+    document.getElementById('x').innerHTML = x;
+    document.getElementById('o').innerHTML = o;
+    azzera();
+  }
+
+  function conferma() {
+    controllaGiocatori();
+    if ( tiri === 0 & x === 'Computer') {
+      giocaComputer();
+    }
+  }
+
+  function riempiCombinazioni(qui) { // deve essere passata la casella cliccata o scelta
+    if (qui.attributes[0].value === 'uno') {
+      comb123.push(qui.innerHTML);
+      if (comb123.length === 3) { combinazioni.push(comb123) };
+      comb147.push(qui.innerHTML);
+      if (comb147.length === 3) { combinazioni.push(comb147) };
+      comb159.push(qui.innerHTML);
+      if (comb159.length === 3) { combinazioni.push(comb159) };
+    }
+    else if (qui.attributes[0].value === 'due') {
+      comb123.push(qui.innerHTML);
+      if (comb123.length === 3) { combinazioni.push(comb123) };
+      comb258.push(qui.innerHTML);
+      if (comb258.length === 3) { combinazioni.push(comb258) };
+    }
+    else if (qui.attributes[0].value === 'tre') {
+      comb123.push(qui.innerHTML);
+      if (comb123.length === 3) { combinazioni.push(comb123) };
+      comb369.push(qui.innerHTML);
+      if (comb369.length === 3) { combinazioni.push(comb369) };
+      comb357.push(qui.innerHTML);
+      if (comb357.length === 3) { combinazioni.push(comb357) };
+    }
+    else if (qui.attributes[0].value === 'quattro') {
+      comb147.push(qui.innerHTML);
+      if (comb147.length === 3) { combinazioni.push(comb147) };
+      comb456.push(qui.innerHTML);
+      if (comb456.length === 3) { combinazioni.push(comb456) };
+    }
+    else if (qui.attributes[0].value === 'cinque') {
+      comb159.push(qui.innerHTML);
+      if (comb159.length === 3) { combinazioni.push(comb159) };
+      comb258.push(qui.innerHTML);
+      if (comb258.length === 3) { combinazioni.push(comb258) };
+      comb357.push(qui.innerHTML);
+      if (comb357.length === 3) { combinazioni.push(comb357) };
+      comb456.push(qui.innerHTML);
+      if (comb456.length === 3) { combinazioni.push(comb456) };
+    }
+    else if (qui.attributes[0].value === 'sei') {
+      comb369.push(qui.innerHTML);
+      if (comb369.length === 3) { combinazioni.push(comb369) };
+      comb456.push(qui.innerHTML);
+      if (comb456.length === 3) { combinazioni.push(comb456) };
+    }
+    else if (qui.attributes[0].value === 'sette') {
+      comb147.push(qui.innerHTML);
+      if (comb147.length === 3) { combinazioni.push(comb147) };
+      comb357.push(qui.innerHTML);
+      if (comb357.length === 3) { combinazioni.push(comb357) };
+      comb789.push(qui.innerHTML);
+      if (comb789.length === 3) { combinazioni.push(comb789) };
+    }
+    else if (qui.attributes[0].value === 'otto') {
+      comb258.push(qui.innerHTML);
+      if (comb258.length === 3) { combinazioni.push(comb258) };
+      comb789.push(qui.innerHTML);
+      if (comb789.length === 3) { combinazioni.push(comb789) };
+    }
+    else if (qui.attributes[0].value === 'nove') {
+      comb159.push(qui.innerHTML);
+      if (comb159.length === 3) { combinazioni.push(comb159) };
+      comb369.push(qui.innerHTML);
+      if (comb369.length === 3) { combinazioni.push(comb369) };
+      comb789.push(qui.innerHTML);
+      if (comb789.length === 3) { combinazioni.push(comb789) };
+    }
+  }
+
+  function riempiCombXXXnum(qui) { // deve essere passata la casella cliccata o scelta
+    if (qui.attributes[0].value === 'uno') {
+      comb123num.push(1);
+      comb147num.push(1);
+      comb159num.push(1);
+    }
+    else if (qui.attributes[0].value === 'due') {
+      comb123num.push(2);
+      comb258num.push(2);
+    }
+    else if (qui.attributes[0].value === 'tre') {
+      comb123num.push(3);
+      comb369num.push(3);
+      comb357num.push(3);
+    }
+    else if (qui.attributes[0].value === 'quattro') {
+      comb147num.push(4);
+      comb456num.push(4);
+    }
+    else if (qui.attributes[0].value === 'cinque') {
+      comb159num.push(5);
+      comb258num.push(5);
+      comb357num.push(5);
+      comb456num.push(5);
+    }
+    else if (qui.attributes[0].value === 'sei') {
+      comb369num.push(6);
+      comb456num.push(6);
+    }
+    else if (qui.attributes[0].value === 'sette') {
+      comb147num.push(7);
+      comb357num.push(7);
+      comb789num.push(7);
+    }
+    else if (qui.attributes[0].value === 'otto') {
+      comb258num.push(8);
+      comb789num.push(8);
+    }
+    else if (qui.attributes[0].value === 'nove') {
+      comb159num.push(9);
+      comb369num.push(9);
+      comb789num.push(9);
+    }
+  }
+
+  function riempiCombinazioniNum() {
+    combinazioniNum.push(comb123num);
+    combinazioniNum.push(comb147num);
+    combinazioniNum.push(comb159num);
+    combinazioniNum.push(comb258num);
+    combinazioniNum.push(comb369num);
+    combinazioniNum.push(comb357num);
+    combinazioniNum.push(comb456num);
+    combinazioniNum.push(comb789num);
+  }
+
+  function controllaVincite() {
+    //console.log(combinazioni);
+    for (var i = 0; i < combinazioni.length; i++) {
+      if (combinazioni[i][0] === combinazioni[i][1] & combinazioni[i][0] === combinazioni[i][2]) {
+        if (combinazioni[i][0] === '<p>X</p>') {
+          alert('Ha vinto ' + x + '!');
+          vinteX ++;
+          displayX.innerHTML = vinteX;
+        }
+        else {
+          alert('Ha vinto ' + o + '!');
+          vinteO ++;
+          displayO.innerHTML = vinteO;
+        }
+        partite ++; //partite += 1;
+        giocate.innerHTML = partite;
+        azzera();
+        if (x === 'Computer') {
+          giocaComputer(numeriUsati); // aumenta tiri di 1
+        }
+        vincita = 1;
+      }
+      else {
+        vincita = 0;
+      }
+    }
+  }
+
+  function gioca(qui) {
+    //console.log(qui);
+    if (qui.innerHTML !== '<p></p>') {
+      alert("Questa casella è già piena! Scegline un'altra");
+    }
+    else {
+      var id = qui.attributes[0].value;
+      //console.log(id);
+      tiri ++;
+      switch (id) {
+        case 'uno':
+        num = 1;
+        break;
+        case 'due':
+        num = 2;
+        break;
+        case 'tre':
+        num = 3;
+        break;
+        case 'quattro':
+        num = 4;
+        break;
+        case 'cinque':
+        num = 5;
+        break;
+        case 'sei':
+        num = 6;
+        break;
+        case 'sette':
+        num = 7;
+        break;
+        case 'otto':
+        num = 8;
+        break;
+        case 'nove':
+        num = 9;
+        break;
+      }
+      numeriUsati.push(num);
+      // se il tiro è dispari inserisco X, altrimenti O
+      if (tiri%2 === 1) {
+        qui.innerHTML = '<p>X</p>';
+      }
+      else {
+        qui.innerHTML = '<p>O</p>';
+      }
+      riempiCombinazioni(qui);
+      riempiCombXXXnum(qui);
+    }
+  }
+
+  function scegliId(numeroCasella) {
+    switch (numeroCasella) {
+      case 1:
+      tiriLettere = 'uno';
+      break;
+      case 2:
+      tiriLettere = 'due';
+      break;
+      case 3:
+      tiriLettere = 'tre';
+      break;
+      case 4:
+      tiriLettere = 'quattro';
+      break;
+      case 5:
+      tiriLettere = 'cinque';
+      break;
+      case 6:
+      tiriLettere = 'sei';
+      break;
+      case 7:
+      tiriLettere = 'sette';
+      break;
+      case 8:
+      tiriLettere = 'otto';
+      break;
+      case 9:
+      tiriLettere = 'nove';
+      break;
+    }
+  }
+
+  function somma(acc, val) {
+    return acc + val;
+  }
+
+  function random2468() {
+    num = (Math.floor((Math.random() * 4) + 1)) * 2;
+    scegliId(num);
+    tiro = document.getElementById(tiriLettere);
+    while (tiro.innerHTML !== '<p></p>') { // num === usati[0]
+      num = (Math.floor((Math.random() * 4) + 1)) * 2;
+      scegliId(num);
+      tiro = document.getElementById(tiriLettere);
+    }
+  }
+
+  function random13579() {
+    num = (Math.floor((Math.random() * 5) + 1));
+    switch (num) {
+    case 1:
+      num = 1;
+      break;
+    case 2:
+      num = 3;
+      break;
+    case 3:
+      num = 5;
+      break;
+    case 4:
+      num = 7;
+      break;
+    case 5:
+      num = 9;
+      break;
+    }
+    scegliId(num);
+    tiro = document.getElementById(tiriLettere);
+    while (tiro.innerHTML !== '<p></p>') {
+      num = (Math.floor((Math.random() * 5) + 1));
+      switch (num) {
+      case 1:
+        num = 1;
+        break;
+      case 2:
+        num = 3;
+        break;
+      case 3:
+        num = 5;
+        break;
+      case 4:
+        num = 7;
+        break;
+      case 5:
+        num = 9;
+        break;
+      }
+      scegliId(num);
+      tiro = document.getElementById(tiriLettere);
+    }
+  }
+
+  function randomLibera() {
+    num = Math.floor((Math.random() * 9) + 1);
+    scegliId(num);
+    tiro = document.getElementById(tiriLettere);
+    while (tiro.innerHTML !== '<p></p>') {
+      num = Math.floor((Math.random() * 9) + 1);
+      scegliId(num);
+      tiro = document.getElementById(tiriLettere);
+      //console.log(tiro);
+    }
+  }
+
+  function giocaComputer(usati) { // potrei passare una matrice con le caselle vuote?
+    riempiCombinazioniNum();
+    if (tiri === lastTiri + 1) {
+      tiri ++;
+      lastTiri = tiri;
+      if (tiri <= 9) {
+        switch (tiri) {
+          case 1: // a caso: questo è un bel regalo al Giocatore!
+            num = Math.floor((Math.random() * 9) + 1); //random1-9
+            scegliId(num);
+            tiro = document.getElementById(tiriLettere);
+            break;
+          case 2: // c'è una sola casella occupata
+            switch (usati[0]) {
+              case 1:
+              case 3:
+              case 5:
+              case 7:
+              case 9:
+                random13579();
+                break;
+              case 2:
+              case 4:
+              case 6:
+              case 8:
+                num = 5;
+                break;
+            }
+            scegliId(num);
+            tiro = document.getElementById(tiriLettere);
+            break;
+          case 3: // 2 caselle già occupate
+            switch (usati[0]) {
+              case 5:
+                if (usati[1]%2 === 1) {
+                  randomLibera();
+                  while (num === 10 - usati[1]) {
+                    randomLibera();
+                  }
+                }
+                else if (usati[1] === 2) {
+                  random13579();
+                  while (num === 1 | num === 3) {
+                    random13579();
+                  }
+                }
+                else if (usati[1] === 4) {
+                  random13579();
+                  while (num === 1 | num === 7) {
+                    random13579();
+                  }
+                }
+                else if (usati[1] === 6) {
+                  random13579();
+                  while (num === 9 | num === 3) {
+                    random13579();
+                  }
+                }
+                else if (usati[1] === 8) {
+                  random13579();
+                  while (num === 7 | num === 9) {
+                    random13579();
+                  }
+                }
+                break;
+              case 2:
+              case 4:
+              case 6:
+              case 8:
+                if (usati[1] === 5) {
+                  randomLibera();
+                }
+                else {
+                  num = 5;
+                }
+                break;
+              default:
+                if (usati[1] === 5) {
+                  random13579();
+                  while (num === 10 - usati[0]) {
+                    random13579();
+                  }
+                }
+                else {
+                  num = 5;
+                }
+                break;
+            }
+            scegliId(num);
+            tiro = document.getElementById(tiriLettere);
+            break;
+          case 4:
+            num = -1;
+            //console.log(combinazioniNum);
+            //console.log(combinazioni);
+            for (var i = 0; i < combinazioniNum.length; i++) { //var i in combinazioniNum) {
+              if (combinazioniNum[i].length === 3) {
+                switch (i) {
+                  case 0:
+                    comb = comb123;
+                    break;
+                  case 1:
+                    comb = comb147;
+                    break;
+                  case 2:
+                    comb = comb159;
+                    break;
+                  case 3:
+                    comb = comb258;
+                    break;
+                  case 4:
+                    comb = comb369;
+                    break;
+                  case 5:
+                    comb = comb357;
+                    break;
+                  case 6:
+                    comb = comb456;
+                    break;
+                  case 7:
+                    comb = comb789;
+                    break;
+                }
+                if (comb[0] === comb[1] & comb[0] === '<p>X</p>') {
+                  num = combinazioniNum[i][0] - combinazioniNum[i][1] - combinazioniNum[i][2];
+                  break;
+                }
+              }
+            }
+            if (num === -1) {
+              randomLibera(); // MIGLIORARE QUI
+            }
+            scegliId(num);
+            tiro = document.getElementById(tiriLettere);
+            break;
+          case 5:
+            num = -1;
+            for (var i = 0; i < combinazioniNum.length; i++) {
+              if (combinazioniNum[i].length === 3) {
+                switch (i) {
+                  case 0:
+                    comb = comb123;
+                    break;
+                  case 1:
+                    comb = comb147;
+                    break;
+                  case 2:
+                    comb = comb159;
+                    break;
+                  case 3:
+                    comb = comb258;
+                    break;
+                  case 4:
+                    comb = comb369;
+                    break;
+                  case 5:
+                    comb = comb357;
+                    break;
+                  case 6:
+                    comb = comb456;
+                    break;
+                  case 7:
+                    comb = comb789;
+                    break;
+                }
+                if (comb[0] === comb[1] & comb[0] === '<p>O</p>') {
+                  num = combinazioniNum[i][0] - combinazioniNum[i][1] - combinazioniNum[i][2];
+                  break;
+                }
+                else if (comb[0] === comb[1] & comb[0] === '<p>X</p>') {
+                  num = combinazioniNum[i][0] - combinazioniNum[i][1] - combinazioniNum[i][2];
+                  break;
+                }
+              }
+            }
+            if (num === -1) {
+              randomLibera(); // MIGLIORARE QUI
+            }
+            scegliId(num);
+            tiro = document.getElementById(tiriLettere);
+            break;
+          case 6:
+            num = -1;
+            for (var i = 0; i < combinazioniNum.length; i++) {
+              if (combinazioniNum[i].length === 3) {
+                switch (i) {
+                  case 0:
+                    comb = comb123;
+                    break;
+                  case 1:
+                    comb = comb147;
+                    break;
+                  case 2:
+                    comb = comb159;
+                    break;
+                  case 3:
+                    comb = comb258;
+                    break;
+                  case 4:
+                    comb = comb369;
+                    break;
+                  case 5:
+                    comb = comb357;
+                    break;
+                  case 6:
+                    comb = comb456;
+                    break;
+                  case 7:
+                    comb = comb789;
+                    break;
+                }
+                if (comb[0] === comb[1] & comb[0] === '<p>O</p>') {
+                  num = combinazioniNum[i][0] - combinazioniNum[i][1] - combinazioniNum[i][2];
+                  break;
+                }
+                else if (comb[0] === comb[1] & comb[0] === '<p>X</p>') {
+                  num = combinazioniNum[i][0] - combinazioniNum[i][1] - combinazioniNum[i][2];
+                  break;
+                }
+              }
+            }
+            if (num === -1) {
+              randomLibera(); // MIGLIORARE QUI
+            }
+            scegliId(num);
+            tiro = document.getElementById(tiriLettere);
+            break;
+          case 7:
+            num = -1;
+            for (var i = 0; i < combinazioniNum.length; i++) {
+              if (combinazioniNum[i].length === 3) {
+                switch (i) {
+                  case 0:
+                    comb = comb123;
+                    break;
+                  case 1:
+                    comb = comb147;
+                    break;
+                  case 2:
+                    comb = comb159;
+                    break;
+                  case 3:
+                    comb = comb258;
+                    break;
+                  case 4:
+                    comb = comb369;
+                    break;
+                  case 5:
+                    comb = comb357;
+                    break;
+                  case 6:
+                    comb = comb456;
+                    break;
+                  case 7:
+                    comb = comb789;
+                    break;
+                }
+                if (comb[0] === comb[1] & comb[0] === '<p>O</p>') {
+                  num = combinazioniNum[i][0] - combinazioniNum[i][1] - combinazioniNum[i][2];
+                  break;
+                }
+                else if (comb[0] === comb[1] & comb[0] === '<p>X</p>') {
+                  num = combinazioniNum[i][0] - combinazioniNum[i][1] - combinazioniNum[i][2];
+                  break;
+                }
+              }
+            }
+            if (num === -1) {
+              randomLibera(); // MIGLIORARE QUI
+            }
+            scegliId(num);
+            tiro = document.getElementById(tiriLettere);
+            break;
+          case 8:
+            num = -1;
+            for (var i = 0; i < combinazioniNum.length; i++) {
+              if (combinazioniNum[i].length === 3) {
+                switch (i) {
+                  case 0:
+                    comb = comb123;
+                    break;
+                  case 1:
+                    comb = comb147;
+                    break;
+                  case 2:
+                    comb = comb159;
+                    break;
+                  case 3:
+                    comb = comb258;
+                    break;
+                  case 4:
+                    comb = comb369;
+                    break;
+                  case 5:
+                    comb = comb357;
+                    break;
+                  case 6:
+                    comb = comb456;
+                    break;
+                  case 7:
+                    comb = comb789;
+                    break;
+                }
+                if (comb[0] === comb[1] & comb[0] === '<p>O</p>') {
+                  num = combinazioniNum[i][0] - combinazioniNum[i][1] - combinazioniNum[i][2];
+                  break;
+                }
+                else if (comb[0] === comb[1] & comb[0] === '<p>X</p>') {
+                  num = combinazioniNum[i][0] - combinazioniNum[i][1] - combinazioniNum[i][2];
+                  break;
+                }
+              }
+            }
+            if (num === -1) {
+              randomLibera(); // MIGLIORARE QUI
+            }
+            scegliId(num);
+            tiro = document.getElementById(tiriLettere);
+            break;
+          case 9:
+            num = 45 - usati.reduce(somma);
+            //randomLibera();
+            scegliId(num);
+            tiro = document.getElementById(tiriLettere);
+            break;
+        }
+        numeriUsati.push(num)
+        // se il tiro è dispari inserisco X, altrimenti O
+        if (tiri%2 === 1) {
+          tiro.innerHTML = '<p>X</p>';
+        }
+        else {
+          tiro.innerHTML = '<p>O</p>';
+        }
+        riempiCombinazioni(tiro);
+        riempiCombXXXnum(tiro);
+      }
+    }
+    combinazioniNum = [];
+  }
+
+  function click() {
+    if (tiri === 0) { // tiri = 0 e 1° click implica inizia giocatore
+      controllaGiocatori();
+      lastTiri = 0;
+    }
+    //console.log(this);
+    gioca(this); //aumenta tiri di 1
+    // tiri da 5 a 9 devo controllare chi ha vinto
+    if (tiri > 4 & tiri < 9) {
+      controllaVincite();
+    }
+    if (x === 'Computer' & tiri%2 === 0) {
+      if (tiri < 9) {
+        giocaComputer(numeriUsati); // aumenta tiri di 1 e arriva a 9 tiri.
+      }
+      if (tiri > 4 & tiri < 9) {
+        controllaVincite();
+      }
+    }
+    if (o === 'Computer' & tiri%2 === 1) {
+      if (tiri < 9) {
+        giocaComputer(numeriUsati); // aumenta tiri di 1 e arriva a 9 tiri.
+      }
+      if (tiri > 4 & tiri < 9) {
+        controllaVincite();
+      }
+    }
+    if (tiri === 9) {
+      //console.log(combinazioni);
+      // tiri = 9 deve dire anche se è un pareggio.
+      controllaVincite();
+      //console.log(vincita);
+      if (vincita === 0) {
+        alert('Avete pareggiato!');
+        partite += 1;
+        giocate.innerHTML = partite;
+        azzera();
+        if (x === 'Computer') {
+          giocaComputer(numeriUsati); // aumenta tiri di 1
+        }
+      }
+    }
+  }
+
+  document.getElementById('conferma').addEventListener("click", conferma);
+  document.getElementById('reset').addEventListener("click", reset);
+  document.getElementById('resetta').addEventListener("click", reset);
+  /*document.getElementById('uno').addEventListener("click", click);
+  document.getElementById('due').addEventListener("click", click);
+  document.getElementById('tre').addEventListener("click", click);
+  document.getElementById('quattro').addEventListener("click", click);
+  document.getElementById('cinque').addEventListener("click", click);
+  document.getElementById('sei').addEventListener("click", click);
+  document.getElementById('sette').addEventListener("click", click);
+  document.getElementById('otto').addEventListener("click", click);
+  document.getElementById('nove').addEventListener("click", click);*/
+  //for (var i = 0; i < caselle.length; i++) {
+  for (var i in caselle) {
+    caselle[i].onclick = click; // FUNZIONA COSÌ
+    // function() { CONTENUTO DI CLICK } FUNZIONA COSÌ
+    //caselle[i].addEventListener("click", click); // FUNZIONA MA CONSOLE DÀ ERRORE DI BATTITURA
+  }
+</script>

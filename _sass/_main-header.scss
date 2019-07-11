@@ -1,0 +1,28 @@
+#main-header {
+  display: none;
+}
+
+@include media-query($on-laptop) {
+  #main-header {
+    display: block;
+
+    .wrapper {  } // metto sempre un div con class wrapper all'interno delle sezioni principali
+    div {         // idem come sopra, per il momento non è necessario usare la classe
+      background-color: $brand-color;
+      height: 120px;
+    }
+
+    #logo { // il logo si trova all'interno del wrapper che ho impostato con l'html, quindi è già allineato
+      //display: block;
+      width: 234px;
+      height: 90px;
+      margin-top: 15px;  // allineamento verticale del logo di cui conosco la dimensione in pixel
+      float: left; // necessario per far partire il contenitore successivo di fianco e non sotto
+    }
+  }
+}
+  /*
+  div#main-banner { // questo serve solo nel caso che metta un banner di fianco al logo
+  float: right;
+  background-color: yellow;
+  }*/

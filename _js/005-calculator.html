@@ -1,0 +1,209 @@
+---
+layout: item
+title: Calcolatrice
+voceMenu: calculator
+author: howi
+date: 2017-08-21 17:50 +0200
+---
+<div class="resizable">
+  <div id="calculator" class="calculator">
+    <div id="zero" class="num">
+      <p>0</p>
+    </div>
+    <div id=uno class="num">
+      <p>1</p>
+    </div>
+    <div id=due class="num">
+      <p>2</p>
+    </div>
+    <div id=tre class="num">
+      <p>3</p>
+    </div>
+    <div id=quattro class="num">
+      <p>4</p>
+    </div>
+    <div id=cinque class="num">
+      <p>5</p>
+    </div>
+    <div id=sei class="num">
+      <p>6</p>
+    </div>
+    <div id=sette class="num">
+      <p>7</p>
+    </div>
+    <div id=otto class="num">
+      <p>8</p>
+    </div>
+    <div id=nove class="num">
+      <p>9</p>
+    </div>
+    <div id=più class="oper">
+      <p>+</p>
+    </div>
+    <div id=meno class="oper">
+      <p>-</p>
+    </div>
+    <div id=per class="oper">
+      <p>x</p>
+    </div>
+    <div id=diviso class="oper">
+      <p>/</p>
+    </div>
+    <div id=uguale class="uguale">
+      <p>=</p>
+    </div>
+    <div id=cancella class="cancella">
+      <p>C</p>
+    </div>
+    <div id=schermo class="schermo">
+      <p id="result">0</p>
+      <p id="monitor">0</p>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+  var
+    operazione = [],
+    temp = {},
+    classe = '',
+    num = 0,
+    fattori = [],
+    fattoriSec = [],
+    operatori = [],
+    len = operatori.length,
+    operatoriSec = [],
+    risultato = 0,
+    previous = 'num',
+    monitorText = '',
+    result = document.getElementById('result'),
+    monitor = document.getElementById('monitor'),
+    tutti = document.getElementById('calculator').getElementsByTagName('div');
+    //console.log(tutti);
+
+  function cancella() {
+    num = 0;
+    risultato = 0;
+    operazione = [];
+    fattori = [];
+    operatori = [];
+    //monitorText = '';
+    monitor.innerHTML = 0;
+    result.innerHTML = risultato;
+    previous = 'cancella';
+  }
+
+  for (var i in tutti) {
+    tutti[i].onclick = function() {
+      console.log(previous);
+      if (previous === 'uguale') {
+        result.innerHTML = risultato;
+      }
+      console.log(this);
+      classe = this.attributes[1].value;
+      //console.log(classe);
+      temp = this.getElementsByTagName('p');
+      operazione.push(temp[0].innerHTML);
+      //this.style.background = 'yellow';
+      console.log(operazione);
+      for (var i in operazione) {
+        monitorText += operazione[i];
+      }
+      monitor.innerHTML = monitorText;
+      monitorText = '';
+
+      if (classe === 'num') {
+        num = num + temp[0].innerHTML;
+        previous = 'num';
+        //console.log(Number(temp[0].innerHTML));
+      }
+
+      else if (classe === 'oper' ) {
+        len = operatori.length;
+        if (previous === 'oper') {
+          console.log(fattori);
+          console.log(operatori);
+          operatori.splice(len-1,1);
+          //fattori.splice(len-1,1);
+          console.log(fattori);
+          console.log(operatori);
+        }
+        else {
+          num = Number(num);
+          fattori.push(num);
+          //if (previous !== 'uguale') {
+          //}
+          num = 0;
+        }
+        operatori.push(temp[0].innerHTML);
+        previous = 'oper';
+      }
+
+      else if (classe === 'uguale') {
+        if (previous === 'uguale') {
+          num = 0;
+        }
+        len = operatori.length;
+        num = Number(num);
+        fattori.push(num);
+        //risultato = fattori[0] + fattori[1];
+        /*
+        25  2   10  4   8   16  3  5
+        +   -   *   +   /   -   +
+        */
+        for (var i=0; i<len; i++) {
+          if (operatori[i] === 'x') {
+            fattori[i] = fattori[i] * fattori[i+1];
+            fattori.splice(i+1,1);
+            operatori.splice(i,1);
+            i--;
+            len--;
+          }
+          else if (operatori[i] === '/') {
+            fattori[i] = fattori[i] / fattori[i+1];
+            fattori.splice(i+1,1);
+            operatori.splice(i,1);
+            i--;
+            len--;
+          }
+        }
+        risultato = fattori[0];
+        for (var i = 0; i<len; i++) {
+          if (operatori[i] === '+') {
+            risultato += fattori[i+1];
+          }
+          else if (operatori[i] === '-') {
+            risultato -= fattori[i+1];
+          }
+        }
+        result.innerHTML = risultato;
+        //console.log(risultato);
+        fattori = [];
+        //fattori.push(risultato);
+        operazione = [];
+        operazione.push(risultato);
+        //monitorText = '';
+        operatori = [];
+        num = risultato; //0;
+        risultato = 0;
+        previous = 'uguale';
+      }
+
+      else if (classe = 'cancella') {
+        /*  num = 0;
+        risultato = 0;
+        operazione = [];
+        fattori = [];
+        operatori = [];
+        //monitorText = '';
+        monitor.innerHTML = 0;
+        result.innerHTML = risultato;
+        previous = 'cancella'; */
+        cancella();
+      }
+
+      /*console.log(num/2 + ' ' + previous);*/
+
+    }
+  }
+</script>

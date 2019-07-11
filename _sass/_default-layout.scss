@@ -1,0 +1,70 @@
+body {
+  //max-width: 40cm;
+  margin: 0 auto;
+  display: grid;
+  grid:
+    "header"
+    "menu"
+    "navigation"
+    "content"
+    "aside"
+    "footer";
+  grid-template-columns: 100%;
+//  background-color: cyan; // per riconoscere il body
+}
+/*@include media-query($on-tablet) {
+  body {
+    // display: grid;
+    grid:
+    "header header"
+    "menu menu"
+    "content navigation"
+    "content content"
+    "aside aside"
+    "footer footer";
+    grid-template-columns: 1fr 20%;
+  }
+}*/
+@include media-query($on-laptop) {
+  body {
+    // display: grid;
+    grid:
+    "header header header"
+    "menu menu menu"
+    "aside content navigation"
+    "footer footer footer";
+    //grid-template-columns: 20% 1fr 20%; // sballa la larghezza del content
+    grid-template-columns: 20% 60% 20%; // per larghezze precise meglio usare le percentuali
+  }
+}
+// Ognuna delle seguenti sezioni deve avere il suo foglio di stile.
+#main-header {
+  grid-area: header;
+  display: block;
+  background-color: purple;
+}
+#main-menu {
+  grid-area: menu;
+  display: block;
+  //background-color: blue;
+}
+#main-content {
+  grid-area: content;
+  display: block;
+  //background-color: yellow;
+}
+#main-navigation {
+  grid-area: navigation;
+  display: block;
+  background-color: pink;
+}
+#main-aside {
+  grid-area: aside;
+  display: block;
+  background-color: gray;
+}
+#main-footer {
+  grid-area: footer;
+  display: block;
+  background-color: green;
+}

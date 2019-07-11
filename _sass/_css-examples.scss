@@ -1,0 +1,55 @@
+
+#shadow1 {
+  text-shadow: 2px -3px 3px #666;
+}
+#shadow2 {
+  text-shadow: -4px -4px 2px #666;
+}
+#shadow3 {
+  text-shadow: 2px 2px 4px #666;
+}
+#shadow4 {
+  text-shadow: 2px -4px 6px #666;
+}
+#shadow5 {
+  font-size: 100px;
+  text-shadow:  -14px  14px 9px yellow,
+                 14px -14px 9px green,
+                -14px -14px 9px blue,
+                 14px  14px 9px purple;
+}
+#shadow6 {
+  font-size: 100px;
+  text-shadow:  -14px  0px 9px #666,
+                 0px -14px 9px #666,
+                 14px  0px 9px #666,
+                 0px  14px 9px #666,
+                -14px  14px 9px #666,
+                 14px -14px 9px #666,
+                -14px -14px 9px #666,
+                 14px  14px 9px #666;
+}
+
+
+/* link modificato */
+a.link-mod:link {
+  text-decoration: none;
+  color: darkblue;
+}
+a.link-mod:visited {
+  color: purple;
+}
+a.link-mod:focus {
+  color: white;
+  background: lightgreen;
+  outline: 1px solid darkgreen;
+}
+a.link-mod:hover {
+  text-decoration: underline;
+  padding: 2px;
+  background: lightgreen;
+  outline: 1px solid darkgreen;
+}
+a.link-mod:active {
+  outline: 1px solid pink;
+}
